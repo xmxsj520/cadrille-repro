@@ -218,3 +218,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# cadrille 复现专用
+data/
+ckpt_sft/
+ckpt_qwen/
+work_dirs/
+*.stl
+*.safetensors
+*.pth
