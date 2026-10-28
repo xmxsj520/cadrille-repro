@@ -1,18 +1,20 @@
 # cadrille-repro
 
-复现论文 **[cadrille: Multi-modal CAD Reconstruction with Online Reinforcement Learning](https://arxiv.org/abs/2505.22914)** 中 Table 1 的 `cadrille R_pi` 行，以及其前作 [CAD-Recode](https://github.com/filaPro/cad-recode) 的 baseline 行。
+复现论文 **[cadrille: Multi-modal CAD Reconstruction with Online Reinforcement Learning](https://arxiv.org/abs/2505.22914)** 中 Table 1 的 `cadrille R_pi + D_t` 行，以及其前作 [CAD-Recode](https://github.com/filaPro/cad-recode) 的 baseline 行。
 
 ## 复现结果
 
 使用官方权重，在 DeepCAD 测试集（8046 个样本）上评估。
 
-### 行 1：`cadrille R_pi`（三个模态全部）
+### 行 1：`cadrille R_pi + D_t`（三个模态全部）
 
 | 模态 | median CD↓ | mean IoU↑ | IR↓ | 论文 CD / IoU / IR |
 |---|---|---|---|---|
 | **点云** | **0.180** | **87.3** | **1.86** | 0.18 / 87.1 / 2.1 |
 | **图像** | **0.184** | **86.6** | **1.44** | 0.18 / 86.1 / 1.5 |
 | **文本** | **0.202** | **82.3** | **2.56** | 0.20 / 82.1 / 1.4 |
+
+> **为何是 `R_pi + D_t`**：官方发布权重可同时对点云、图像、文本三种输入推理，说明它训练时包含文本模态（论文 `R_pi` 行的文本列为空）。该行与 `R_pi` 行在点云/图像列数值完全相同，故本次复现同时覆盖 `R_pi` 行的 6 项指标。
 
 ### 行 2：`CAD-Recode R_p`（点云）
 
@@ -41,7 +43,7 @@
 
 | 项目 | 范围 |
 |---|---|
-| 复现的行 | **2 行 / 20 行**（`cadrille R_pi`、`CAD-Recode R_p`） |
+| 复现的行 | **2 个配置 / 覆盖 3 行**（`cadrille R_pi + D_t`、`CAD-Recode R_p`） |
 | 复现的模态 | 点云、多视图图像、文本（全部） |
 | 复现的指标 | **12 个** |
 | 未做 | 15 个 baseline、`D_pit` 行、RL 微调、从零训练 |
