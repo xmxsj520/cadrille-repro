@@ -1,10 +1,12 @@
 # cadrille-repro
 
-复现论文 **[cadrille: Multi-modal CAD Reconstruction with Online Reinforcement Learning](https://arxiv.org/abs/2505.22914)** 中 Table 1 的 `cadrille R_pi` 行。
+复现论文 **[cadrille: Multi-modal CAD Reconstruction with Online Reinforcement Learning](https://arxiv.org/abs/2505.22914)** 中 Table 1 的 `cadrille R_pi` 行，以及其前作 [CAD-Recode](https://github.com/filaPro/cad-recode) 的 baseline 行。
 
 ## 复现结果
 
-使用官方 SFT 权重，在 DeepCAD 测试集（8046 个样本）上评估，三个模态全部完成。
+使用官方权重，在 DeepCAD 测试集（8046 个样本）上评估。
+
+### 行 1：`cadrille R_pi`（三个模态全部）
 
 | 模态 | median CD↓ | mean IoU↑ | IR↓ | 论文 CD / IoU / IR |
 |---|---|---|---|---|
@@ -12,7 +14,13 @@
 | **图像** | **0.184** | **86.6** | **1.44** | 0.18 / 86.1 / 1.5 |
 | **文本** | **0.202** | **82.3** | **2.56** | 0.20 / 82.1 / 1.4 |
 
-**9 个指标中 8 个与论文一致**（CD 差异 ≤ 0.004，IoU 差异 ≤ 0.5）。
+### 行 2：`CAD-Recode R_p`（点云）
+
+| 模态 | median CD↓ | mean IoU↑ | IR↓ | 论文 CD / IoU / IR |
+|---|---|---|---|---|
+| **点云** | **0.177** | **87.9** | **2.75** | 0.18 / 87.1 / 3.1 |
+
+**合计 12 个指标，11 个与论文一致；CAD-Recode 行三项全部优于论文。**
 
 > 完整报告见 [复现报告.md](复现报告.md)
 
@@ -33,10 +41,10 @@
 
 | 项目 | 范围 |
 |---|---|
-| 复现的行 | 1 行 / 20 行（`cadrille R_pi`） |
+| 复现的行 | **2 行 / 20 行**（`cadrille R_pi`、`CAD-Recode R_p`） |
 | 复现的模态 | 点云、多视图图像、文本（全部） |
-| 复现的指标 | 9 个 |
-| 未做 | 16 个 baseline、`D_pit` 行、RL 微调、从零训练 |
+| 复现的指标 | **12 个** |
+| 未做 | 15 个 baseline、`D_pit` 行、RL 微调、从零训练 |
 
 ## 环境
 
@@ -55,6 +63,7 @@
 | 文件 | 说明 |
 |---|---|
 | [复现报告.md](复现报告.md) | 完整复现报告：环境、流程、结果、12 条工程踩坑记录、命令清单 |
+| [cadrecode_infer.py](cadrecode_infer.py) | **CAD-Recode 批量推理脚本**（官方只给了单样本 demo.ipynb） |
 | [datasets.md](datasets.md) | 数据集清单：来源、路径要求、校验方法 |
 | [setup_env.sh](setup_env.sh) | 环境一键安装脚本（8 步、可重入） |
 | [step1_check_env.py](step1_check_env.py) | 环境自检（9 项：GPU/bf16/渲染/CadQuery/指标链路） |
